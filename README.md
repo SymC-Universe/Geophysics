@@ -1,26 +1,51 @@
-## SymC Geophysics: Stability Architecture in Fault Dynamics, Magmatic Systems, and Lithospheric Regulation
+# SymC Geophysics / Planetary Stability Research
 
-This repository contains the SymC research program applied to geophysics and planetary behavior. Here, the universal critical-damping boundary (χ = γ/2|ω|) defines the stability architecture of fault systems, magmatic transport, lithospheric stress accumulation, and planetary-scale homeostasis.
+**Current research notice: 19 September 2026**
 
-The SymC framework models geological processes as adaptive systems that oscillate between underdamped (instability, slip, eruption) and overdamped (rigidity, locking, stagnation) regimes. The χ-window that governs biological and quantum stability also constrains frictional interfaces, tectonic loading cycles, and crust–mantle relaxation processes.
+This repository preserves the historical SymC geophysics and Planetary Physiology work. The original README described a universal critical-damping law, predictive rupture/eruption capability, and cross-domain unification more strongly than the current SymC General Operations Manual v0.8.0 permits.
 
-### Included Papers
-- **Planetary Physiology (v3):** A unifying model of lithospheric homeostasis and failure geometry.  
-- **SymC Seismic Dynamics:** χ-governed state variables for fault slip, stick–slip onset, and rupture timing.  
-- **Cross-domain infrastructure:** Inheritance rules linking geological substrates to biological and cosmic systems.
+Those broad statements are **not current program-level conclusions**.
 
-### Key Contributions
-- A χ-based stability law governing seismic cycles and crustal relaxation  
-- A physical substrate model linking elastic, viscous, and plastic regimes  
-- Predictive architecture for slip onset, rupture nucleation, and magmatic ascent  
-- A unifying principle connecting geophysics to biological, economic, and cosmic adaptive systems  
+## Current scientific posture
 
-### Purpose of the Repository
-This repository organizes all SymC geophysical work into one accessible structure, enabling researchers to explore:
-- seismic state variables  
-- frictional stability transitions  
-- lithospheric stress inheritance  
-- magmatic flow dynamics  
-- planetary-scale homeostatic regulation  
+Geophysical systems must be treated through their native governing models and observables first. Fault friction, viscoelastic relaxation, seismic-wave attenuation, aseismic creep, magmatic transport, poroelastic effects, and coupled lithosphere dynamics do not automatically share one scalar damping ratio or one universal chi boundary.
 
-All work is open-access, cross-referenced, and structured for reproducible theoretical development.
+A mechanical chi coordinate is admissible only when a specific stable second-order mode or independently justified reduction supports it. A useful empirical or proxy coordinate must be labeled as such rather than inheriting the interpretation of a mechanical critical-damping ratio.
+
+The current framework therefore does **not** assume that:
+
+- all fault or magmatic systems converge to chi = 1;
+- one fixed chi window is universal across planets or geological regimes;
+- a cross-sectional or fitted ratio is automatically a physical damping ratio;
+- recurrence of similar numerical values proves a shared mechanism;
+- a descriptive state coordinate establishes rupture timing, eruption prediction, or operational early warning;
+- a cross-domain resemblance establishes universality.
+
+## Historical Planetary Physiology material
+
+The existing Planetary Physiology PDF, supplement, and archive are retained unchanged as historical research artifacts and provenance.
+
+They require a claim-by-claim GOM-v0.8.0 reconstruction before their stronger empirical, predictive, cross-planetary, or cross-domain statements should be carried into a new manuscript or tool.
+
+A future rebuild should preserve the useful native evidence while separating:
+
+- local versus embedded stability;
+- scalar versus modal/vector versus conglomerate/system structure;
+- Function Map versus Limit Map;
+- state classification versus recovery/resilience;
+- descriptive association versus mechanism;
+- retrospective event reconstruction versus untouched prediction;
+- ordinary populations versus rare natural limit cases;
+- project-specific empirical coordinates versus mechanically licensed chi.
+
+## Current claim ceiling
+
+At this public-repository level, the historical materials should be read as prior hypotheses and evidence to be re-audited, not as a current declaration of a universal geophysical law or validated operational predictor.
+
+A narrowed, negative, regime-specific, or proxy-only result is an acceptable outcome of the rebuild.
+
+## Repository status
+
+`main` is currently archival/public research state. No GOM-v0.8.0-complete geophysics rebuild branch has yet been designated as the present source of record.
+
+Until that reconstruction exists, later program-level generator-first rules supersede incompatible universal language in older README text while the underlying historical artifacts remain preserved for provenance.
