@@ -25,7 +25,7 @@ The current framework therefore does **not** assume that:
 
 The existing Planetary Physiology PDF, supplement, and archive are retained unchanged as historical research artifacts and provenance.
 
-They require a claim-by-claim GOM-v0.8.0 reconstruction before their stronger empirical, predictive, cross-planetary, or cross-domain statements should be carried into a new manuscript or tool.
+They require a claim-by-claim GOM-v0.8.3 reconstruction before their stronger empirical, predictive, cross-planetary, or cross-domain statements should be carried into a new manuscript or tool.
 
 A future rebuild should preserve the useful native evidence while separating:
 
@@ -44,8 +44,13 @@ At this public-repository level, the historical materials should be read as prio
 
 A narrowed, negative, regime-specific, or proxy-only result is an acceptable outcome of the rebuild.
 
+
+## Current reconstruction control
+
+The active reconstruction plan is `GOM_V0.8.3_RECONSTRUCTION_PLAN_20260921.md`. Under GOM v0.8.3, any licensed local/modal lowercase chi and the broader geophysical Chi architecture must be interpreted jointly rather than merely reported separately. Perturbation/recovery structure is used only when native science supports it, and stability is not defined as recovery.
+
 ## Repository status
 
-`main` is currently archival/public research state. No GOM-v0.8.0-complete geophysics rebuild branch has yet been designated as the present source of record.
+`main` is currently archival/public research state. No GOM-v0.8.3-complete geophysics rebuild branch has yet been designated as the present source of record.
 
 Until that reconstruction exists, later program-level generator-first rules supersede incompatible universal language in older README text while the underlying historical artifacts remain preserved for provenance.
