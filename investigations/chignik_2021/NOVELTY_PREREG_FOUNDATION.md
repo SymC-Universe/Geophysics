@@ -80,34 +80,62 @@ Examples:
 - *Bridging time scales of faulting: From coseismic to postseismic slip of the 2014 South Napa earthquake*.
 - Postseismic GNSS data assimilation, DOI 10.1186/s40623-020-01293-0.
 
+## 2.5 Second-pass red-team boundaries
+
+Additional prior art narrows the residual novelty further:
+
+- **Automatic modal admission/rejection is established.** Operational modal analysis already uses stabilization diagrams, state-space order selection, Bayesian evidence/model-validity tests, confidence intervals, persistent-mode clustering, and spurious-mode rejection. Representative examples include Vu et al. (2013), Au (2016), Cara et al. (2013), and Yang et al. (2026).
+- **Automated source characterization/model selection is established.** USGS and research workflows already automate strong-motion processing, source-parameter estimation, station residuals, and selection between competing source descriptions using information criteria or waveform fit.
+- **Transferable waveform representation is established.** U-Trans, SeisMoLLM, SeisBench and related work already pursue generalizable representations and multi-task seismic analysis.
+- **Source/path/site separation is established.** Mixed-effects ground-motion residual decomposition and spectral decomposition methods explicitly partition source, path and site contributions, although uncertainty and trade-offs remain substantial.
+- **Earthquake/fault digital twins are emerging rapidly.** 2025-2026 work includes earthquake-cycle reduced-order models with data assimilation, fault-volume digital twins, operational earthquake digital-twin concepts, and the SCEC UNREST digital-twin program.
+
+**Consequence:** the surviving concept cannot claim novelty from mode finding, model selection, data fusion, generic latent state estimation, or the digital-twin label. The residual burden is to show a specific scientifically useful capability that existing tools do not provide in combination.
+
+### Provisional product identity after red-team pass
+
+The strongest surviving concept is an **auditable physical representation-adjudication layer**, not a new scalar or generic waveform representation.
+
+Candidate function:
+
+1. ingest standard processed seismic/geodetic products and native quality metadata;
+2. preserve standard field quantities and run/consume native comparators;
+3. adjudicate among physically distinct representation classes rather than forcing one class globally;
+4. separate or explicitly bound source, path, site and instrument contributions;
+5. expose local/component, cross-station/network and recovery organization without averaging contradictions away;
+6. return ACCEPT / REFUSE / NEED_MORE_INFORMATION with uncertainty and a machine-readable reason;
+7. state when existing native tools are sufficient and stop;
+8. only compute lower-case chi when an ordinary damping ratio is physically licensed;
+9. treat broader Chi as a candidate architecture description that must demonstrate incremental downstream value.
+
+The first preregistration must therefore test a **decision capability**, not the existence of a scalar.
+
+Candidate decision targets include:
+- selecting the scientifically adequate representation/model family for an event or observable;
+- distinguishing source-consistent structure from site/path-local structure;
+- determining when cross-sensor substitution is valid;
+- identifying when additional expensive rupture/recovery inversion is warranted;
+- testing whether fast-event organization adds information about independently reconstructed recovery beyond standard source descriptors.
+
 ## 3. Provisional residual novelty space
 
 The literature search has not yet established that the following combination exists as a standard reusable field tool. These are candidate novelty classes, NOT claims of novelty.
 
-### N1. Representation-admission and refusal architecture
+### N1. Cross-physics representation adjudication
 
-A tool that does not assume every dataset supports a scalar state.
+Automatic modal admission/refusal alone is established prior art. The residual question is whether a reusable workflow can choose or refuse among physically different model classes across earthquake observables without outcome-dependent tuning.
 
-It would:
-1. start from native observables;
-2. test component, modal and system representations;
-3. admit scalar damping coordinates only where a licensed second-order factor exists;
-4. return explicit NOT_APPLICABLE / refusal states where scalar reduction fails;
-5. propagate the reason for refusal as scientific information.
+Candidate classes include standard source-spectrum/source-parameter descriptions, site/path-dominated response, a single admitted damped factor, multimodal or nonstationary response, monotonic recovery, network/spatial organization without useful scalar reduction, and insufficient/ambiguous data.
 
-Potential value: prevents attractive but invalid reduction of heterogeneous geophysical data.
+**Novelty burden:** demonstrate that this cross-physics decision layer adds measurable value beyond existing source tools, OMA/model-selection methods, and analyst judgment.
 
-### N2. Local/modal-to-system stability architecture
+### N2. Source-aware local/modal-to-system architecture
 
-Rather than one number, reconstruct:
-- native component behavior;
-- reproducible modal factors where they exist;
-- local/modal damping coordinates where licensed;
-- coupling and spatial organization;
-- system-level architecture \(\Chi\);
-- uncertainty, heterogeneity and refusal states.
+Rather than one number, reconstruct native source/component behavior, source/path/site attribution or uncertainty, reproducible modal factors only where they survive those challenges, coupling and network organization, recovery structure, and system-level architecture.
 
-Potential value: an interpretable intermediate layer between raw signals and full physics-based inversions.
+Operational modal analysis and source/path/site decomposition already exist separately.
+
+**Novelty burden:** demonstrate value in connecting these levels for fault/source interpretation while preserving native terminology, uncertainty, and explicit refusal.
 
 ### N3. Cross-timescale state linkage
 
@@ -120,17 +148,11 @@ This is distinct from merely fitting both phases. The question is whether a comp
 
 Potential value: bridge event-scale dynamic behavior and recovery characterization without pretending that one timescale is the other.
 
-### N4. Cross-sensor comparable diagnostic
+### N4. Cross-sensor validity map
 
-A useful field tool should determine whether equivalent physical information can be recovered from:
-- strong-motion velocity/displacement;
-- high-rate GNSS;
-- broadband seismic records;
-- lower-rate GNSS recovery data where applicable.
+Generic seismic/GNSS fusion is established. The residual question is whether a tool can state which **physical quantities** are equivalent across strong-motion, high-rate GNSS, broadband seismic, and slower geodetic observations, over what bandwidth/regime, with what uncertainty, and when substitution must be refused.
 
-The tool must expose when sensor substitution is valid and when it is not.
-
-Potential value: broaden usable station coverage and permit common diagnostic outputs from heterogeneous networks.
+Potential value: a reusable validity/limit map for sensor substitution rather than another fusion algorithm.
 
 ### N5. Incremental-value / triage layer
 
@@ -171,14 +193,14 @@ Can an analyst run the tool on standard public waveform/geodetic products with m
 
 These questions are deliberately stronger than “is chi near a particular value?”
 
-### RQ1: Admission validity
-Can a pre-specified engine correctly identify when a second-order/modal reduction is supported versus when the data are site-local, multimodal, monotonic, low-SNR or otherwise non-admissible?
+### RQ1: Cross-physics representation validity
+Can a pre-specified engine choose or refuse among source-spectrum, site/path-dominated, single-mode, multimode/nonstationary, monotonic-recovery, and network-only representations on known-truth and real benchmark cases without outcome-dependent tuning?
 
 ### RQ2: Cross-sensor reproducibility
 For collocated or near-collocated GNSS and strong-motion observations of the same event, do admitted modal frequency/damping estimates agree within pre-specified uncertainty?
 
-### RQ3: Cross-station reproducibility
-Do candidate event-scale modes recur across independent stations after accounting for travel time, orientation, site effects and instrument response?
+### RQ3: Source-versus-site/path adjudication
+Can candidate event-scale structure be shown to be source-consistent across independent stations after accounting for travel time, orientation, instrument response, attenuation, and site/path effects, rather than merely recurring as a waveform feature?
 
 ### RQ4: Incremental information
 Does the proposed architecture explain or predict an independently defined downstream quantity better than simpler native descriptors?
@@ -289,7 +311,7 @@ Each hypothesis can fail independently. H-D is not required for H-A through H-C 
 - Generic “fault stability metric” novelty: **REFUSED**.
 - Generic “earthquake state variable” novelty: **REFUSED**.
 - Generic seismic+GNSS fusion novelty: **REFUSED**.
-- Representation/refusal architecture: **OPEN / PRIOR ART SEARCH IN PROGRESS**.
+- Generic automatic modal admission/refusal: **REFUSED AS NOVELTY**; established prior art.\n- Generic automated earthquake characterization/model selection: **REFUSED AS NOVELTY**.\n- Generic transferable seismic representation/foundation model: **REFUSED AS NOVELTY**.\n- Generic earthquake/fault digital-twin architecture: **REFUSED AS NOVELTY**.\n- Cross-physics representation adjudication: **OPEN / EQUIVALENT-ARCHITECTURE SEARCH IN PROGRESS**.
 - Local/modal-to-system architecture: **OPEN / PRIOR ART SEARCH IN PROGRESS**.
 - Cross-timescale joint architecture: **OPEN / PRIOR ART SEARCH IN PROGRESS**.
 - Broad-use diagnostic/triage utility: **OPEN / REQUIRES BENCHMARK DEFINITION**.
