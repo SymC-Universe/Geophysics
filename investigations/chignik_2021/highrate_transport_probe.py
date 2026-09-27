@@ -233,6 +233,10 @@ def main() -> int:
     if fixtures.exists() and success > 0:
         subprocess.run([sys.executable, str(fixtures)], check=True)
 
+    baseline = pathlib.Path("investigations/chignik_2021/highrate_synthetic_baseline.py")
+    if baseline.exists() and success > 0:
+        subprocess.run([sys.executable, str(baseline)], check=True)
+
     # A zero-success run is a transport failure worth making visible to Actions.
     return 0 if success > 0 else 2
 
