@@ -6,6 +6,7 @@ on:
     paths:
       - "investigations/chignik_2021/**"
       - "investigations/multievent_benchmark_2026/**"
+      - "investigations/volcano_earthquake_coupling_2026/**"
       - ".github/workflows/chignik-highrate-probe.yml"
 
 permissions:
@@ -34,6 +35,9 @@ jobs:
       - name: Run multi-event open-data probe
         run: python investigations/multievent_benchmark_2026/open_data_availability_probe.py
 
+      - name: Run volcano open-data probe
+        run: python investigations/volcano_earthquake_coupling_2026/volcano_open_data_probe.py
+
       - name: Show probe summaries
         if: always()
         run: |
@@ -46,6 +50,11 @@ jobs:
             cat artifacts/multievent_benchmark_2026/AVAILABILITY_SUMMARY.md
           else
             echo "Multi-event probe did not produce AVAILABILITY_SUMMARY.md"
+          fi
+          if [ -f artifacts/volcano_earthquake_coupling_2026/VOLCANO_AVAILABILITY_SUMMARY.md ]; then
+            cat artifacts/volcano_earthquake_coupling_2026/VOLCANO_AVAILABILITY_SUMMARY.md
+          else
+            echo "Volcano probe did not produce VOLCANO_AVAILABILITY_SUMMARY.md"
           fi
 
       - name: Upload Chignik probe artifacts
@@ -63,5 +72,14 @@ jobs:
         with:
           name: multievent-data-availability
           path: artifacts/multievent_benchmark_2026/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload volcano availability artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: volcano-data-availability
+          path: artifacts/volcano_earthquake_coupling_2026/
           if-no-files-found: warn
           retention-days: 14
