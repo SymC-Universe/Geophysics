@@ -1,10 +1,11 @@
-name: Chignik high-rate transport probe
+name: Geophysics benchmark probes
 
 on:
   workflow_dispatch:
   push:
     paths:
       - "investigations/chignik_2021/**"
+      - "investigations/multievent_benchmark_2026/**"
       - ".github/workflows/chignik-highrate-probe.yml"
 
 permissions:
@@ -30,20 +31,37 @@ jobs:
       - name: Run Chignik transport probe
         run: python investigations/chignik_2021/highrate_transport_probe.py
 
-      - name: Show probe summary
+      - name: Run multi-event open-data probe
+        run: python investigations/multievent_benchmark_2026/open_data_availability_probe.py
+
+      - name: Show probe summaries
         if: always()
         run: |
           if [ -f artifacts/chignik_highrate_probe/SUMMARY.md ]; then
             cat artifacts/chignik_highrate_probe/SUMMARY.md
           else
-            echo "Probe did not produce SUMMARY.md"
+            echo "Chignik probe did not produce SUMMARY.md"
+          fi
+          if [ -f artifacts/multievent_benchmark_2026/AVAILABILITY_SUMMARY.md ]; then
+            cat artifacts/multievent_benchmark_2026/AVAILABILITY_SUMMARY.md
+          else
+            echo "Multi-event probe did not produce AVAILABILITY_SUMMARY.md"
           fi
 
-      - name: Upload probe artifacts
+      - name: Upload Chignik probe artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: chignik-highrate-probe
           path: artifacts/chignik_highrate_probe/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload multi-event availability artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: multievent-data-availability
+          path: artifacts/multievent_benchmark_2026/
           if-no-files-found: warn
           retention-days: 14
