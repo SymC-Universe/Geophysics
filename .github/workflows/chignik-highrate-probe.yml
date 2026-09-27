@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - "investigations/chignik_2021/highrate_transport_probe.py"
+      - "investigations/chignik_2021/**"
       - ".github/workflows/chignik-highrate-probe.yml"
 
 permissions:
@@ -25,7 +25,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install dependencies
-        run: python -m pip install --disable-pip-version-check requests
+        run: python -m pip install --disable-pip-version-check requests numpy scipy
 
       - name: Run Chignik transport probe
         run: python investigations/chignik_2021/highrate_transport_probe.py
