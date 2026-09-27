@@ -72,21 +72,35 @@ def pencil_poles(path, fs, window_s, order):
         })
     return out
 
-def truth_modes(truth):
+def truth_modes_for_record(truth, station, component):
+    """Return only oscillatory truth modes that actually exist in this record."""
     if "modes" in truth:
-        return truth["modes"]
-    if "zeta" in truth and "f0_hz" in truth:
+        return [m for m in truth["modes"] if m.get("zeta", 1.0) < 1.0]
+    out = []
+    if "shared" in truth and isinstance(truth["shared"], dict):
+        sh = truth["shared"]
+        if sh.get("zeta", 1.0) < 1.0 and "f0_hz" in sh:
+            out.append(sh)
+        loc = truth.get("local")
+        if isinstance(loc, dict) and loc.get("station") == station and loc.get("component") == component:
+            if loc.get("zeta", 1.0) < 1.0 and "f0_hz" in loc:
+                out.append(loc)
+        return out
+    if "local_station" in truth:
+        if station == truth.get("local_station") and truth.get("zeta", 1.0) < 1.0 and "f0_hz" in truth:
+            return [{"zeta":truth["zeta"],"f0_hz":truth["f0_hz"]}]
+        return []
+    if "zeta" in truth and "f0_hz" in truth and truth["zeta"] < 1.0:
         return [{"zeta":truth["zeta"],"f0_hz":truth["f0_hz"]}]
-    if "shared" in truth and isinstance(truth["shared"],dict) and "zeta" in truth["shared"]:
-        return [truth["shared"]]
     return []
 
 manifest=json.loads(MANIFEST.read_text())
 rows=[]
 for case in manifest["cases"]:
     fs=float(case["sample_rate_hz"])
-    truths=truth_modes(case.get("truth",{}))
+    truth=case.get("truth",{})
     for rec in case["records"]:
+        truths=truth_modes_for_record(truth, rec["station"], rec["component"])
         for w in WINDOWS:
             for order in ORDERS:
                 poles=pencil_poles(rec["path"],fs,w,order)
@@ -185,9 +199,51 @@ for cid in ["F01_clean_underdamped","F02_high_damping_underdamped"]:
 
 lines += [
     "",
+    "## All-fixture descriptive map",
+    "",
+    "This section reports the complete frozen fixture library without selecting a threshold, preferred window, preferred order, or real-data outcome.",
+]
+for case in manifest["cases"]:
+    cid=case["case_id"]
+    subset=[r for r in rows if r["case_id"]==cid]
+    cell_map={}
+    for r in subset:
+        key=(r["station"],r["component"],r["window_s"],r["order"])
+        cell_map[key]=r["n_candidate_poles"]
+    counts=list(cell_map.values())
+    zero_frac=(sum(1 for x in counts if x==0)/len(counts)) if counts else float("nan")
+    matches=[r for r in subset if r["rel_freq_error"] is not None]
+    lines += [
+        "",
+        f"### {cid}",
+        f"- expected_class={case['expected_class']}",
+        f"- unique station/component/window/order cells={len(counts)}",
+        f"- decaying oscillatory candidate count range={min(counts) if counts else 'n/a'}..{max(counts) if counts else 'n/a'}",
+        f"- zero-candidate cell fraction={zero_frac:.5g}" if counts else "- zero-candidate cell fraction=n/a",
+    ]
+    if matches:
+        freq=np.asarray([r["rel_freq_error"] for r in matches],dtype=float)
+        damp=np.asarray([r["abs_zeta_error"] for r in matches],dtype=float)
+        lines += [
+            f"- truth-match rows={len(matches)}",
+            f"- median relative frequency error={np.median(freq):.5g}; max={np.max(freq):.5g}",
+            f"- median absolute damping-ratio error={np.median(damp):.5g}; max={np.max(damp):.5g}",
+        ]
+    else:
+        lines.append("- truth-match rows=0 (refusal/nonstationary/no-oscillatory-truth record)")
+    for rec in case["records"]:
+        vals=[v for k,v in cell_map.items() if k[0]==rec["station"] and k[1]==rec["component"]]
+        lines.append(
+            f"- record {rec['station']}:{rec['component']}: cells={len(vals)}, "
+            f"candidate_count_range={min(vals) if vals else 'n/a'}..{max(vals) if vals else 'n/a'}"
+        )
+
+lines += [
+    "",
     "## Interpretation",
     "",
     "This is a qualification map, not an optimization exercise. Stability across fixed windows/orders, known-truth error, and behavior on refusal fixtures will be used to design a separate prospective admission rule before any real-event pole interpretation.",
+    "Critical, overdamped, monotonic, chirped, low-SNR, site-local, multimodal, and shared-plus-local fixtures remain refusal/qualification controls. Their outputs are evidence about estimator behavior, not permission to relax the refusal rules.",
 ]
 REPORT.write_text("\n".join(lines)+"\n")
 print(REPORT.read_text())
