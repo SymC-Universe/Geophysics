@@ -245,6 +245,10 @@ def main() -> int:
     if dep_probe.exists() and success > 0:
         subprocess.run([sys.executable, str(dep_probe)], check=True)
 
+    matrix_pencil = pathlib.Path("investigations/chignik_2021/highrate_synthetic_matrix_pencil.py")
+    if matrix_pencil.exists() and success > 0:
+        subprocess.run([sys.executable, str(matrix_pencil)], check=True)
+
     # A zero-success run is a transport failure worth making visible to Actions.
     return 0 if success > 0 else 2
 
