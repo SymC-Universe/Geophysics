@@ -38,6 +38,9 @@ jobs:
       - name: Run volcano open-data probe
         run: python investigations/volcano_earthquake_coupling_2026/volcano_open_data_probe.py
 
+      - name: Run volcano waveform-access probe
+        run: python investigations/volcano_earthquake_coupling_2026/volcano_waveform_access_probe.py
+
       - name: Show probe summaries
         if: always()
         run: |
