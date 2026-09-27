@@ -241,6 +241,10 @@ def main() -> int:
     if ar2.exists() and success > 0:
         subprocess.run([sys.executable, str(ar2)], check=True)
 
+    dep_probe = pathlib.Path("investigations/chignik_2021/highrate_dependency_probe.py")
+    if dep_probe.exists() and success > 0:
+        subprocess.run([sys.executable, str(dep_probe)], check=True)
+
     # A zero-success run is a transport failure worth making visible to Actions.
     return 0 if success > 0 else 2
 
