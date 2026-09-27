@@ -22,6 +22,7 @@ import os
 import pathlib
 import re
 import shutil
+import subprocess
 import sys
 import time
 import zipfile
@@ -221,8 +222,7 @@ def main() -> int:
         lines.append(f"- {pathlib.Path(x['dest']).name}: {'OK' if x.get('ok') else 'FAIL'}")
     summary.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
-    # A zero-success run is a transport failure worth making visible to Actions.
-    return 0 if success > 0 else 2
+    # Measurement/format qualification is deliberately downstream of transport and\n    # deliberately upstream of any modal, pole, or chi estimation.\n    qualifier = pathlib.Path("investigations/chignik_2021/highrate_format_qualification.py")\n    if qualifier.exists() and success > 0:\n        subprocess.run([sys.executable, str(qualifier)], check=True)\n\n    # A zero-success run is a transport failure worth making visible to Actions.\n    return 0 if success > 0 else 2
 
 if __name__ == "__main__":
     raise SystemExit(main())
